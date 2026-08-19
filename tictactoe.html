@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic-Tac-Toe</title>
+  <style>
+    body {
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #1a1a2e;
+      color: #eee;
+    }
+    h1 { margin-bottom: 10px; letter-spacing: 2px; }
+    #status { margin-bottom: 20px; font-size: 1.2em; min-height: 1.5em; }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 6px;
+    }
+    .cell {
+      background: #16213e;
+      border: 2px solid #0f3460;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .cell:hover:not(.taken) { background: #0f3460; }
+    .cell.taken { cursor: default; }
+    .cell.x { color: #e94560; }
+    .cell.o { color: #0f9b8e; }
+    #reset {
+      margin-top: 24px;
+      padding: 8px 24px;
+      font-size: 1em;
+      font-family: monospace;
+      background: #0f3460;
+      color: #eee;
+      border: 2px solid #e94560;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+    #reset:hover { background: #e94560; }
+    #score {
+      margin-top: 16px;
+      font-size: 0.95em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>TIC-TAC-TOE</h1>
+  <div id="status">X's turn</div>
+  <div id="board">
+    <div class="cell" data-i="0"></div>
+    <div class="cell" data-i="1"></div>
+    <div class="cell" data-i="2"></div>
+    <div class="cell" data-i="3"></div>
+    <div class="cell" data-i="4"></div>
+    <div class="cell" data-i="5"></div>
+    <div class="cell" data-i="6"></div>
+    <div class="cell" data-i="7"></div>
+    <div class="cell" data-i="8"></div>
+  </div>
+  <button id="reset">New Game</button>
+  <div id="score">X: 0 &nbsp;|&nbsp; O: 0 &nbsp;|&nbsp; Draws: 0</div>
+
+  <script>
+    const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    let board, current, over, score = {X:0, O:0, D:0};
+
+    function init() {
+      board = Array(9).fill('');
+      current = 'X';
+      over = false;
+      document.querySelectorAll('.cell').forEach(c => {
+        c.textContent = '';
+        c.className = 'cell';
+      });
+      document.getElementById('status').textContent = "X's turn";
+    }
+
+    function checkWin() {
+      for (const [a,b,c] of WINS)
+        if (board[a] && board[a] === board[b] && board[b] === board[c])
+          return board[a];
+      return board.every(Boolean) ? 'Draw' : null;
+    }
+
+    function updateScore() {
+      document.getElementById('score').textContent =
+        `X: ${score.X} \u00a0|\u00a0 O: ${score.O} \u00a0|\u00a0 Draws: ${score.D}`;
+    }
+
+    document.getElementById('board').addEventListener('click', e => {
+      const cell = e.target.closest('.cell');
+      if (!cell || over || cell.classList.contains('taken')) return;
+      const i = +cell.dataset.i;
+      board[i] = current;
+      cell.textContent = current;
+      cell.classList.add('taken', current.toLowerCase());
+      const result = checkWin();
+      if (result) {
+        over = true;
+        if (result === 'Draw') { score.D++; document.getElementById('status').textContent = "It's a draw!"; }
+        else { score[result]++; document.getElementById('status').textContent = `${result} wins!`; }
+        updateScore();
+      } else {
+        current = current === 'X' ? 'O' : 'X';
+        document.getElementById('status').textContent = `${current}'s turn`;
+      }
+    });
+
+    document.getElementById('reset').addEventListener('click', init);
+
+    init();
+  </script>
+</body>
+</html>
