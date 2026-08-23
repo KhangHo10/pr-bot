@@ -103,7 +103,7 @@ def main():
 
     diff = get_pr_diff(repo, pr_number, github_token)
     review_object = review_diff(diff, api_key)
-    review_format = format_review(review_format)
+    review_format = format_review(review_object)
     post_comment(repo, pr_number, github_token, review_format)
 
 if __name__ == "__main__":
