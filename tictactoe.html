@@ -8,17 +8,24 @@
         font-family: monospace;
         display: flex;
         flex-direction: column;
-        align-items: center;abcde
+        align-items: center;
         justify-content: center;
         height: 100vh;
         margin: 0;
         background: #1a1a2e;
         color: #eee;
       }
-      h1 { margin-bottom: 10px; letter-spacing: 2px; }
-      #status { margin-bottom: 20px; font-size: 1.2em; min-height: 1.5em; }
+      h1 {
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+      }
+      #status {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        min-height: 1.5em;
+      }
       #board {
-        display: grid;aaa
+        display: grid;
         grid-template-columns: repeat(3, 100px);
         grid-template-rows: repeat(3, 100px);
         gap: 6px;
@@ -34,10 +41,18 @@
         transition: background 0.15s;
         user-select: none;
       }
-      .cell:hover:not(.taken) { background: #0f3460; }
-      .cell.taken { cursor: default; }
-      .cell.x { color: #e94560; }
-      .cell.o { color: #0f9b8e; }
+      .cell:hover:not(.taken) {
+        background: #0f3460;
+      }
+      .cell.taken {
+        cursor: default;
+      }
+      .cell.x {
+        color: #e94560;
+      }
+      .cell.o {
+        color: #0f9b8e;
+      }
       #reset {
         margin-top: 24px;
         padding: 8px 24px;
@@ -49,7 +64,9 @@
         cursor: pointer;
         letter-spacing: 1px;
       }
-      #reset:hover { background: #e94560; }
+      #reset:hover {
+        background: #e94560;
+      }
       #score {
         margin-top: 16px;
         font-size: 0.95em;
