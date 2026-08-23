@@ -106,5 +106,5 @@ def main():
     review_format = format_review(review_object)
     post_comment(repo, pr_number, github_token, review_format)
 
-if __name__ == "__main__":
+if __name__ == "__main__":asd
     main()
