@@ -58,6 +58,31 @@ def review_diff(diff: str, api_key: str) -> str:
     response = PRReview.model_validate_json(interaction.output_text)
     return response
 
+def format_review(review: PRReview) -> str:
+    """Convert a PRReview object into a markdown comment string"""
+    lines = [f"### 🤖 PR Review\n", f"{review.summary}\n"]
+
+    if review.issues:
+        lines.append("**Issue found: **\n")
+
+        for issue in review.issues:
+            lines.append(f"- **[{issue.severity.upper()}]** `{issue.file}`: {issue.description}")
+            lines.append("")
+    else:
+        lines.append("No issues found.\n")
+
+    if review.suggestions:
+        lines.append("**Suggestions:**\n")
+
+        for suggestion in review.suggestions:
+            lines.append(f"- {suggestion}")
+        lines.append("")
+
+    verdict = "✅ Looks good to merge" if review.approve else "⚠️ Changes recommended before merging"
+    lines.append(f"\n{verdict}")
+
+    return "\n".join(lines)
+
 def post_comment(repo: str, pr_number: str, github_token: str, comment: str) -> str:
     """Post the review as a comment on the PR"""
     url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
@@ -77,8 +102,9 @@ def main():
     api_key = os.environ["GEMINI_API_KEY"]
 
     diff = get_pr_diff(repo, pr_number, github_token)
-    review = review_diff(diff, api_key)
-    post_comment(repo, pr_number, github_token, review)
+    review_object = review_diff(diff, api_key)
+    review_format = format_review(review_format)
+    post_comment(repo, pr_number, github_token, review_format)
 
 if __name__ == "__main__":
     main()
