@@ -1,4 +1,4 @@
-# PR Bot
+# AI Workshop: Building a PR Review Bot
 
 AI-powered PR review using GitHub Actions and an LLM. This project fetches the PR diff, sends it to the model, and posts the review as a PR comment.
 
