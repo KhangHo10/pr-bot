@@ -8,7 +8,7 @@ Gemini is used here because it has a free tier, but the same setup can work with
 
 ## Resources
 - [YouTube Video](https://youtu.be/WH1DY_eqeNY?si=C6t0QhQqQLND2HNx)
-- [Canva Slides](https://canva.link/at5o68flh00aqcp)
+- [Canva Slides](https://canva.link/bllz1ncc9jvh8nv)
 - [GitHub Docs](https://docs.github.com/en/rest/pulls/pulls?apiVersion=2026-03-10)
 
 ## How it works
