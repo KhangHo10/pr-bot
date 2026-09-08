@@ -12,7 +12,7 @@ Gemini is used here because it has a free tier, but the same setup can work with
 
 ## How it works
 
-1. A PR is opened or updated.
+1. A PR (pull request) is opened or updated.
 2. GitHub Actions runs the workflow.
 3. The script fetches the diff from GitHub.
 4. The diff is sent to the model for review.
