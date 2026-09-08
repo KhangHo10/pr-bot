@@ -9,6 +9,7 @@ Gemini is used here because it has a free tier, but the same setup can work with
 ## Resources
 - [YouTube Video](https://youtu.be/WH1DY_eqeNY?si=C6t0QhQqQLND2HNx)
 - [Canva Slides](https://canva.link/at5o68flh00aqcp)
+- [GitHub Docs](https://docs.github.com/en/rest/pulls/pulls?apiVersion=2026-03-10)
 
 ## How it works
 
@@ -38,12 +39,16 @@ pr-bot/
 
 ## Setup
 
-### 1. Clone the repo
+### 1. Clone the repo for local exploration
+
+If you just want to look at the project locally:
 
 ```bash
 git clone git@github.com:KhangHo10/pr-bot.git
 cd pr-bot
 ```
+
+If you want the bot to actually run on a pull request, use your own repository or fork this repo first. Without write access, you cannot push to this repo or open a PR against it.
 
 ### 2. Install dependencies
 
@@ -53,11 +58,11 @@ pip install -r requirements.txt
 
 ### 3. Add the GitHub secret
 
-Create a repository secret named `GEMINI_API_KEY` in GitHub Actions settings.
+In the repository where the bot will run, add a secret named `GEMINI_API_KEY` in GitHub Actions settings.
 
-### 4. Run the workflow
+### 4. Create a branch and open a PR
 
-The workflow in [.github/workflows/pr-review.yml](.github/workflows/pr-review.yml) runs on pull requests and calls the Python script automatically.
+Create a new branch in that repository, make a change, and open a pull request. The workflow in [.github/workflows/pr-review.yml](.github/workflows/pr-review.yml) runs automatically when a PR is opened, synchronized, or reopened.
 
 ```yaml
 on:
@@ -65,7 +70,11 @@ on:
     types: [opened, synchronize, reopened]
 ```
 
-## Run locally
+GitHub Actions does not run from your local clone. It runs in the GitHub repository that contains the PR.
+
+### 5. Run locally (optional)
+
+You can test the script locally before pushing a PR.
 
 ```bash
 export REPO="owner/repo-name"
